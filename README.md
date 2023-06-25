@@ -1,6 +1,6 @@
 Certainly! Here's an example README.md file for your Git repository:
 
-```markdown
+markdown
 # autoTweet
 
 autoTweet is a Go program that generates automated tweets based on predefined topics using the ChatGPT API and posts them as tweets using the Twitter API. It allows you to set the topics for your tweets and control the time frame for posting them. The program also includes proper hashtags to enhance tweet visibility and engagement.
