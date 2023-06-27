@@ -5,11 +5,13 @@ import (
 	"os"
 	"fmt"
 	"log"
+	"time"
 	"bytes"
 	"strconv"
 	"strings"
 	"net/url"
 	"net/http"
+	"math/rand"
 	"io/ioutil"
 	"encoding/json"
 	"mime/multipart"
@@ -242,40 +244,51 @@ func makeTweet(postText, imagePath string) {
 
 func main() {
 
-	model := "text-davinci-003"
-	prompt := "generate a creative, fictional, futuristic, utopian, dystopian prompt for generating an image"
-	maxTokens := 15
-	temperature := 0.9
+	for {
 
-	generatedText, err := generateCompletion(prompt, model, maxTokens, temperature)
-	if err != nil {
-		log.Fatal(err)
-	}
+		model := "text-davinci-003"
+		prompt := "generate a creative, fictional, futuristic, utopian, dystopian prompt for generating an image"
+		maxTokens := 15
+		temperature := 0.9
 
-	n := 1
-	size := "1024x1024"
-
-	imageURLs, err := generateImageURLs(generatedText, n, size)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	postText := "prompt: " + generatedText + 
-				"\n\nthe prompt for this image was generated with gpt4\n" +
-				"\nview source: https://github.com/0x30c4/autoTweet" +
-				"\n#chatgpt #chatgpt4 #gpt4 #openai #DALLE #gpt3 #autoTweet"
-
-
-	fmt.Println(postText, imageURLs)
-
-	for _, url := range imageURLs {
-		filePath := "images/" + uuid.New().String() + ".png"
-		err := downloadFile(url, filePath)
+		generatedText, err := generateCompletion(prompt, model, maxTokens, temperature)
 		if err != nil {
-			fmt.Println("Error:", err)
-			return
+			log.Fatal(err)
 		}
-		makeTweet(postText, filePath)
+
+		n := 1
+		size := "1024x1024"
+
+		imageURLs, err := generateImageURLs(generatedText, n, size)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		postText := "prompt: " + generatedText + 
+					"\n\nthe prompt for this image was generated with gpt4\n" +
+					"\nview source: https://github.com/0x30c4/autoTweet" +
+					"\n#chatgpt #chatgpt4 #gpt4 #openai #DALLE #gpt3 #autoTweet"
+
+
+		fmt.Println(postText, imageURLs)
+
+		for _, url := range imageURLs {
+			filePath := "images/" + uuid.New().String() + ".png"
+			err := downloadFile(url, filePath)
+			if err != nil {
+				fmt.Println("Error:", err)
+				return
+			}
+			makeTweet(postText, filePath)
+		}
+
+		min := 20000
+		max := 28800
+
+		// Generate a random number within the range
+		randomNum := rand.Intn(max-min+1) + min
+
+		time.Sleep(time.Second * time.Duration(randomNum))
 	}
 
 }

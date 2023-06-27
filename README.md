@@ -1,6 +1,6 @@
 # autoTweet
 
-autoTweet is a Go program that generates automated tweets based on predefined topics using the ChatGPT API and posts them as tweets using the Twitter API. It allows you to set the topics for your tweets and control the time frame for posting them. The program also includes proper hashtags to enhance tweet visibility and engagement.
+autoTweet is a Go program that generates automated tweets using the ChatGPT API and posts them as tweets using the Twitter API. It allows you to set the topics for your tweets and control the time frame for posting them. The program also includes proper hashtags to enhance tweet visibility and engagement.
 
 ## Prerequisites
 
@@ -26,6 +26,12 @@ Before running autoTweet, ensure you have the following:
    ```
 
 3. Open the .env file and add your Twitter API and ChatGPT API credentials.
+
+4. Create a directory named ```images``` for the DALL.E generated
+
+   ```shell
+   mkdir images
+   ```
 
 ## Usage
 
